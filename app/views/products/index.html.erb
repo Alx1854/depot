@@ -1,0 +1,28 @@
+<h1>Listing products</h1>
+
+<table>
+  <% @products.each do |product| %>
+  <!-- The Rails helper method called cycle() does this by setting the CSS class of each row to either list_line_even or list_line_odd, automatically toggling between the two style names on successive lines. -->
+    <tr class='<%= cycle('list_line_odd', 'list_line_even') %>'> 
+      <td>
+        <%= image_tag(product.image_url, class: 'list_image') %>
+      </td>
+      <td>
+        <dl> <!-- description list [dl] -->
+          <dt><%= product.title %></dt> <!-- description term [dt] -->
+          <!-- The truncate() helper is used to display just the first eighty characters of the description. But before we call truncate(), we called strip_tags() in order to remove the HTML tags from the description. -->
+          <dd><%= truncate(strip_tags(product.description), length: 80) %></dd> <!-- description data[dd] -->
+        </dl>
+      </td>
+      <td class='list_actions'>
+        <%= link_to 'Show', product %>
+        <%= link_to 'Edit', edit_product_path(product) %>
+        <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Product', new_product_path %>
