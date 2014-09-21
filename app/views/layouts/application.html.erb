@@ -18,7 +18,7 @@
 				<li><a href="#">Questions</a></li>
 				<li><a href="#">News</a></li>
 				<li><a href="#">Contact</a></li>
-				<li>It is: <%= @time %></li>
+				<li>It is: <%= Time.now.strftime("%B") %> <%= Time.now.day %> <%= Time.now.year %></li>
 			</ul>
 		</div>
 		<div id="main">

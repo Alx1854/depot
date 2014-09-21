@@ -1,4 +1,8 @@
 class Product < ActiveRecord::Base
+	has_many :line_items
+
+	before_destroy :ensure_not_referenced_by_any_line_item
+
 	#The validates() method is the standard Rails validator.
 	#It will check one or more model fields against one or more conditions.
 	#presence: true tells the validator to check that each of the named
@@ -17,5 +21,17 @@ class Product < ActiveRecord::Base
 
 	def self.latest
 		Product.order(:updated_at).last
+	end
+
+	private
+
+	#ensure that there are no line items referencing this product
+	def ensure_not_referenced_by_any_line_item
+		if line_items.empty?
+			return true
+		else
+			errors.add(:base, 'Line Items present')
+			return false
+		end
 	end
 end
