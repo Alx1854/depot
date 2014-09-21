@@ -8,10 +8,14 @@ class Product < ActiveRecord::Base
 	#We also pass the rather verbosely named :greater_than_or_equal_to option a value of 0.01.
 	validates :price, numericality: {greater_than_or_equal_to: 0.01}
 	#to ensure that no other row in the products table has the same title as the row we’re about to save.
-	validates :title, uniqueness: true
+	validates :title, uniqueness: true, length: {minimum: 10, message: 'Mínimo 10 carateres'}
 	#check that the URL ends with one of .gif, .jpg, or .png.
 	validates :image_url, allow_blank: true, format: {
 		with: %r{\.(gif|jpg|png)\Z}i,
 		message: 'must be URL for GIF, JPG, or PNG image.'
 	}
+
+	def self.latest
+		Product.order(:updated_at).last
+	end
 end
