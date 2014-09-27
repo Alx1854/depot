@@ -3,15 +3,16 @@
 <% end %>
 
 <h2>Your Cart</h2>
-<table>    
+<table>
+	<%= render(@cart) %>    
   <% @cart.line_items.each do |item| %>
   	<tr>
-<!-- START_HIGHLIGHT -->
+
     	<td><%= item.quantity %> &times;</td>
     	<td><%= item.product.title %></td>
     	<td class="item_price"><%= number_to_currency(item.total_price) %></td>
     	<td><%= button_to 'Delete item', item, method: :delete, data:{confirm: 'Are you sure to delete item?'} %></td>
-<!-- END_HIGHLIGHT -->
+
 		</tr>
   <% end %>
 
